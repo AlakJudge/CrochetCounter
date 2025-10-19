@@ -8,149 +8,293 @@
 
     <LinearLayout
         android:id="@+id/rowNumberLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/stitchTypeLayout"
+        app:layout_constraintBottom_toTopOf="@+id/AddSubButtonsLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.1">
 
         <TextView
-            android:id="@+id/row"
+            android:id="@+id/rowNumberText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="1.5"
             android:autoSizeTextType="uniform"
             android:fontFamily="sans-serif-medium"
-            android:gravity="right"
-            android:text="Row Nº" />
+            android:gravity="end"/>
 
         <TextView
             android:id="@+id/rowNumber"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:gravity="left"
+            android:gravity="start"
             app:autoSizeTextType="uniform"
             app:fontFamily="sans-serif-medium" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/stitchTypeLayout"
-        android:layout_width="395dp"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/AddSubButtonsLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rowNumberLayout">
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            app:autoSizeTextType="uniform"
-            app:fontFamily="sans-serif-medium"
-            android:text="Stitch Type" />
-
-        <Spinner
-            android:id="@+id/stitchTypes"
-            android:layout_width="295dp"
-            android:layout_height="50dp"
-            android:layout_weight="1" />
-
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/AddSubButtonsLayout"
-        android:layout_width="390dp"
-        android:layout_height="0dp"
-        android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/newRowLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
+        android:weightSum="7.4"
+        android:layout_marginBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stitchTypeLayout">
+        app:layout_constraintBottom_toTopOf="@+id/stitchTypeLayout"
+        app:layout_constraintTop_toBottomOf="@+id/rowNumberLayout">
 
         <Button
             android:id="@+id/minus"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:insetTop="0dp"
             android:insetBottom="0dp"
             android:onClick="subStitches"
-            android:text="-" />
+            android:textSize="12dp"
+            android:text="-1" />
+
+        <Button
+            android:id="@+id/minus5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:onClick="sub5Stitches"
+            android:textSize="12dp"
+            android:text="-5" />
+
+        <Button
+            android:id="@+id/minus10"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:onClick="sub10Stitches"
+            android:textSize="12dp"
+            android:text="-10" />
 
         <TextView
             android:id="@+id/numberStitches"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="5"
+            android:layout_weight="1.4"
             android:gravity="center"
+            android:background="@drawable/border"
             app:autoSizeTextType="uniform" />
 
         <Button
             android:id="@+id/plus1"
-            android:layout_width="60dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:insetTop="0dp"
             android:insetBottom="0dp"
             android:onClick="addStitches"
+            android:textSize="12dp"
             android:text="+1" />
 
         <Button
             android:id="@+id/plus5"
-            android:layout_width="60dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:insetTop="0dp"
             android:insetBottom="0dp"
             android:onClick="add5Stitches"
+            android:textSize="12dp"
             android:text="+5" />
 
         <Button
             android:id="@+id/plus10"
-            android:layout_width="60dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:insetTop="0dp"
             android:insetBottom="0dp"
             android:onClick="add10Stitches"
+            android:textSize="11dp"
             android:text="+10" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/newRowLayout"
-        android:layout_width="390dp"
-        android:layout_height="100dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/rowsListView"
+        android:id="@+id/stitchTypeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/favouritesTextLayout"
         app:layout_constraintTop_toBottomOf="@+id/AddSubButtonsLayout">
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:paddingRight= "20dp"
+            android:paddingLeft= "20dp"
+            app:autoSizeTextType="uniform"
+            app:fontFamily="sans-serif-medium"
+
+            android:text="Stitch Type:" />
+
+        <Spinner
+            android:background="@drawable/spinner_border"
+            android:id="@+id/stitchTypes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/favouritesTextLayout"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/favouritesLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stitchTypeLayout">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:text="Favourite Stitches"
+            app:autoSizeTextType="uniform"
+            app:textAllCaps="true" />
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:id="@+id/favouritesLayout"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/newRowLayout"
+        app:layout_constraintTop_toBottomOf="@+id/favouritesTextLayout">
+
+        <Button
+            android:id="@+id/fav1Button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:onClick="add10Stitches"
+            android:text="+" />
+        <Button
+            android:id="@+id/fav2Button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:onClick="add10Stitches"
+            android:text="+" />
+        <Button
+            android:id="@+id/fav3Button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:onClick="add10Stitches"
+            android:text="+" />
+        <Button
+            android:id="@+id/fav4Button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:onClick="add10Stitches"
+            android:text="+" />
+        <Button
+            android:id="@+id/fav5Button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:onClick="add10Stitches"
+            android:text="+" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/newRowLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/patternTextLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stitchTypeLayout">
 
         <Button
             android:id="@+id/newRow"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:onClick="newRow"
-            android:text="Add New Row" />
+            android:text="New Row" />
+
+        <Button
+            android:id="@+id/addToRow"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="newRow"
+            android:text="Add To Row" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/patternTextLayout"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/rowsListView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newRowLayout">
 
         <TextView
-            android:id="@+id/pattern"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_weight="3"
+            android:layout_height="match_parent"
             android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:text="Pattern:"
@@ -161,57 +305,69 @@
 
     <ScrollView
         android:id="@+id/rowsListView"
-        android:layout_width="390dp"
-        android:layout_height="300dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+
         app:layout_constraintBottom_toTopOf="@+id/bottomMenuLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newRowLayout">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:weightSum="15">
 
             <LinearLayout
                 android:id="@+id/rowListNumber"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical" />
 
-            <LinearLayout
-                android:id="@+id/rowList"
-                android:layout_width="wrap_content"
+            <HorizontalScrollView
+                android:id="@+id/horizontalScrollView"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:orientation="vertical" />
+                android:layout_weight="14">
+
+                <LinearLayout
+                    android:id="@+id/rowList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+            </HorizontalScrollView>
         </LinearLayout>
     </ScrollView>
 
     <LinearLayout
         android:id="@+id/bottomMenuLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxHeight="80dp"
+        android:minHeight="70dp"
         android:orientation="horizontal"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rowsListView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="10dp">
+        app:layout_constraintStart_toStartOf="parent">
 
 
         <Button
             android:id="@+id/patternButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="Patterns" />
 
         <Button
             android:id="@+id/newButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:onClick="newPattern"
@@ -219,7 +375,7 @@
 
         <Button
             android:id="@+id/optionsButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="Options" />

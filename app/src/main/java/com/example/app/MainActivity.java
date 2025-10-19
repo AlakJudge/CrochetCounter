@@ -1,6 +1,8 @@
 package com.example.app;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -10,12 +12,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.util.Log;
+
+import java.text.MessageFormat;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     String[] stitchOptions = {"Single Crochet (Sc)", "Chain Stitch (Ch)",
             "Half Double Crochet (Hdc)", "Double Crochet (Dc)", "Half Treble Crochet (Htr)",
             "Treble Crochet (Tr)", "Double Treble Crochet (Dtr)", "Slip Stitch (Sl St)"};
-    String selectedStitch, newSelectedStitch;
+    String selectedStitch;
     boolean multipleStitches = false;
     int first = 0;
     TextView[] multiStitchRow = new TextView[99];
@@ -35,19 +40,23 @@ public class MainActivity extends AppCompatActivity {
     int patternRowCounter = 0;
     int patternCounter = 0;
     ArrayList<String>[] patternRowData = new ArrayList[99];
-
-    ArrayList[]patternData = new ArrayList[50];
-
+    ArrayList<String>[]patternData = new ArrayList[50];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Spinner stitchTypes = findViewById(R.id.stitchTypes);
+        TextView rowNumberText = findViewById(R.id.rowNumberText);
+
         patternRowData[patternRowCounter] = new ArrayList<>();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, stitchOptions);
-        Spinner stitchTypes = findViewById(R.id.stitchTypes);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_activated_1, stitchOptions);
+
         stitchTypes.setAdapter(adapter);
         selectedStitch = stitchTypes.getSelectedItem().toString();
+        rowNumberText.setText("Row Nº");
+
         stitchTypes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -79,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         rowNumber.setText(String.valueOf(rNumber));
 
         Button button = findViewById(R.id.patternButton);
-        button.setOnClickListener(view -> showPatternMenu(view));
+        button.setOnClickListener(this::showPatternMenu);
     }
 
     public void addStitches (View v) {
@@ -108,6 +117,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void sub5Stitches (View v) {
+        TextView stitches = findViewById(R.id.numberStitches);
+        if (s > 0) {
+            s -= 5;
+            stitches.setText(String.valueOf(s));
+        }
+    }
+
+    public void sub10Stitches (View v) {
+        TextView stitches = findViewById(R.id.numberStitches);
+        if (s > 0) {
+            s -= 10;
+            stitches.setText(String.valueOf(s));
+        }
+    }
+
     private void updateRowNumber() {
         rowNumber = findViewById(R.id.rowNumber);
         rowNumber.setText(String.valueOf(rNumber));
@@ -122,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
             TextView row = new TextView(this);
             row.setText(rowData);
             row.setTextSize(20);
-            row.setTypeface(row.getTypeface(), Typeface.BOLD);
+            row.setTypeface(row.getTypeface(), Typeface.NORMAL);
             rowList.addView(row, 0);
 
             LinearLayout rowListNumber = findViewById(R.id.rowListNumber);
@@ -139,8 +164,6 @@ public class MainActivity extends AppCompatActivity {
             String currentText = multiStitchRow[multiCounter].getText().toString();
             rowData = currentText + ", " + s + selectedStitch;
             multiStitchRow[multiCounter].setText(rowData);
-            multiStitchRow[multiCounter].setTextSize(20);
-            multiStitchRow[multiCounter].setTypeface(multiStitchRow[multiCounter].getTypeface(), Typeface.BOLD);
             multipleStitches = false;
             multiCounter++;
             first = 0;
@@ -150,18 +173,19 @@ public class MainActivity extends AppCompatActivity {
         s = 0;
         stitches.setText(String.valueOf(s));
         rNumber++;
-        updateRowNumber();
 
+        updateRowNumber();
         patternRowData();
     }
 
     public void firstStitch() {
         stitchInitials();
         LinearLayout rowList = findViewById(R.id.rowList);
+        HorizontalScrollView horizontalScrollView = findViewById(R.id.horizontalScrollView);
         multiStitchRow[multiCounter] = new TextView(this);
-        multiStitchRow[multiCounter].setText(s + selectedStitch);
+        multiStitchRow[multiCounter].setText(MessageFormat.format("{0}{1}", s, selectedStitch));
         multiStitchRow[multiCounter].setTextSize(20);
-        multiStitchRow[multiCounter].setTypeface(multiStitchRow[multiCounter].getTypeface(), Typeface.BOLD);
+        multiStitchRow[multiCounter].setTypeface(multiStitchRow[multiCounter].getTypeface(), Typeface.NORMAL);
         rowList.addView(multiStitchRow[multiCounter], 0);
 
         LinearLayout rowListNumber = findViewById(R.id.rowListNumber);
@@ -176,19 +200,17 @@ public class MainActivity extends AppCompatActivity {
     public void otherStitches() {
         stitchInitials();
         String currentText = multiStitchRow[multiCounter].getText().toString();
-        multiStitchRow[multiCounter].setText(currentText + ", " + s + selectedStitch);
-        multiStitchRow[multiCounter].setTextSize(20);
-        multiStitchRow[multiCounter].setTypeface(multiStitchRow[multiCounter].getTypeface(), Typeface.BOLD);
+        multiStitchRow[multiCounter].setText(MessageFormat.format("{0}, {1}{2}", currentText, s, selectedStitch));
     }
 
-    public void newPattern () {
+    public void newPattern (View v) {
         LinearLayout rowListNumber = findViewById(R.id.rowListNumber);
         LinearLayout rowList = findViewById(R.id.rowList);
         TextView stitches = findViewById(R.id.numberStitches);
         s = 0;
         rNumber = 1;
         first = 0;
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, stitchOptions);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_activated_1, stitchOptions);
         Spinner stitchTypes = findViewById(R.id.stitchTypes);
         stitchTypes.setAdapter(adapter);
         selectedStitch = stitchTypes.getSelectedItem().toString();
@@ -201,29 +223,31 @@ public class MainActivity extends AppCompatActivity {
 
     public void stitchInitials () {
 
-        if (selectedStitch.equals("Chain Stitch (Ch)")) {
-            selectedStitch = " Ch";
-        }
-        else if (selectedStitch.equals("Single Crochet (Sc)")) {
-            selectedStitch = " Sc";
-        }
-        else if (selectedStitch.equals("Half Double Crochet (Hdc)")) {
-            selectedStitch = " Hdc";
-        }
-        else if (selectedStitch.equals("Double Crochet (Dc)")) {
-            selectedStitch = " Dc";
-        }
-        else if (selectedStitch.equals("Half Treble Crochet (Htr)")) {
-            selectedStitch = " Htr";
-        }
-        else if (selectedStitch.equals("Treble Crochet (Tr)")) {
-            selectedStitch = " Tr";
-        }
-        else if (selectedStitch.equals("Double Treble Crochet (Dtr)")) {
-            selectedStitch = " Dtr";
-        }
-        else if (selectedStitch.equals("Slip Stitch (Sl St)")) {
-            selectedStitch = " Sl St";
+        switch (selectedStitch) {
+            case "Chain Stitch (Ch)":
+                selectedStitch = " Ch";
+                break;
+            case "Single Crochet (Sc)":
+                selectedStitch = " Sc";
+                break;
+            case "Half Double Crochet (Hdc)":
+                selectedStitch = " Hdc";
+                break;
+            case "Double Crochet (Dc)":
+                selectedStitch = " Dc";
+                break;
+            case "Half Treble Crochet (Htr)":
+                selectedStitch = " Htr";
+                break;
+            case "Treble Crochet (Tr)":
+                selectedStitch = " Tr";
+                break;
+            case "Double Treble Crochet (Dtr)":
+                selectedStitch = " Dtr";
+                break;
+            case "Slip Stitch (Sl St)":
+                selectedStitch = " Sl St";
+                break;
         }
     }
 
@@ -241,7 +265,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void loadPattern () {
 
-        newPattern();
+        newPattern(getCurrentFocus());
         SharedPreferences sharedPreferences = getSharedPreferences("PatternData", Context.MODE_PRIVATE);
         String loadedPattern = sharedPreferences.getString("pattern", "EmptyPattern");
 
@@ -259,6 +283,7 @@ public class MainActivity extends AppCompatActivity {
         row.setTypeface(row.getTypeface(), Typeface.BOLD);
         rowList.addView(row, 0);
     }
+    @SuppressLint("NonConstantResourceId")
     private void showPatternMenu(View view) {
         PopupMenu popupMenu = new PopupMenu(this, view);
         getMenuInflater().inflate(R.menu.pattern_menu, popupMenu.getMenu());
@@ -266,7 +291,7 @@ public class MainActivity extends AppCompatActivity {
         popupMenu.setOnMenuItemClickListener(menuItem -> {
             switch (menuItem.getItemId()) {
                 case R.id.savePattern:
-                    patternData[patternCounter] = new ArrayList();
+                    patternData[patternCounter] = new ArrayList<String>();
                     patternData[patternCounter].addAll(patternRowData[patternRowCounter]);
                     patternRowCounter++;
                     patternRowData[patternRowCounter] = new ArrayList<>();
